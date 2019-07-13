@@ -1,0 +1,26 @@
+{
+  "name": "reservationsapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-client": "cd ./client; npm start",
+    "start-server": "cd ./server; npm start",
+    "start-dev": "npm-run-all -p start-server start-client",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd ./client; npm install; cd ../server; npm install;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omardeleo/ReservationsApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omardeleo/ReservationsApp/issues"
+  },
+  "homepage": "https://github.com/omardeleo/ReservationsApp#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
