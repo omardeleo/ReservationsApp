@@ -63,7 +63,7 @@ const dummyRestaurant = {
   id: 1,
   name: "Wendy's",
   opensAt: "07:00",
-  closesAt: "00:00"
+  closestAt: "23:00"
 }
 
 /* GET users listing. */
@@ -75,7 +75,6 @@ router.post('/', (req, res, next) => {
   let reservation = parseTextMessage(req.body);
   let canReserve = validateReservation(reservation, dummyRestaurant);
   res.json(reservation);
-  // res.json(req.body);
 });
 
 module.exports = router;

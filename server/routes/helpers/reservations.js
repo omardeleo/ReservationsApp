@@ -28,10 +28,10 @@ function parseTextMessage(message) {
   let dateTime = new Date(`${message_parse[1]} ${time}:00`);
   let reservation = {
     name: name,
-    dateTime: dateTime,
+    dateTime: dateTime.toString(),
     duration: '1 hour',
     phoneNumber: phoneNumber,
-    createdAt: new Date(),
+    createdAt: new Date().toString(),
     rawJson: message,
     restaurantId: 1
   }
@@ -39,8 +39,19 @@ function parseTextMessage(message) {
 }
 
 // validates if can reserve for give reservationObj (given by parseTextMessage);
+// TODO: there is an issue if closing time is midnight then it should set the date to the next day, right now it will return false because it is set to todays date. might not be a big deal though
 function validateReservation(reservationObj, restaurantObj) {
-  return true;
+  let reservationDateObj = new Date(reservationObj.dateTime);
+  let reservationDate = new Date().setHours(reservationDateObj.getHours(), reservationDateObj.getMinutes());
+  // for open and close time we assume only given time and not date
+  let openTimeHours = restaurantObj.opensAt.split(':');
+  let openTime = new Date().setHours(openTimeHours[0], openTimeHours[1]);
+  let closingTimeHours = restaurantObj.closestAt.split(':');
+  let closingTime = new Date().setHours(closingTimeHours[0], closingTimeHours[1]);
+  // first check date is valid
+  if(!reservationDate) return false;
+  // then check if time is in between
+  return openTime < reservationDate && closingTime > reservationDate
 }
 
 module.exports = { parseTextMessage, validateReservation }
