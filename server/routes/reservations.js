@@ -63,8 +63,8 @@ const dummyJson = [
 const dummyRestaurant = {
   id: 1,
   name: "Wendy's",
-  opensAt: "07:00",
-  closestAt: "23:00"
+  opensAt: "13:00",
+  closestAt: "22:00"
 }
 
 /* GET users listing. */
@@ -72,13 +72,21 @@ router.get('/', (req, res, next) => {
   res.json(dummyJson);
 });
 
-const reservationSuccess = 'Great! You have reserved succesfully.';
-const reservationFailed = 'Sorry Something went wrong, check you message and try again.';
+// const reservationSuccess = 'Great! You have reserved succesfully.';
+const reservationSuccess = (name) =>  `Great! ${name} we have made your reservation.`;
+const reservationFailed = 'Reservation failed check the time and try again. Restaurant opens at 1pm - 10pm.';
 
 router.post('/', (req, res, next) => {
   let reservation = parseTextMessage(req.body);
   let canReserve = validateReservation(reservation, dummyRestaurant);
-  let message = canReserve ? reservationSuccess : reservationFailed;
+  let message = '';
+  // canReserve ? reservationSuccess(reservation.name) : reservationFailed;
+  if(canReserve) {
+    message = reservationSuccess(reservation.name);
+    dummyJson.push(reservation);
+  }
+  else message = reservationFailed
+  // res.json({"message": message});
   // should probably have a catch for errors
   sendMessage(message, reservation.phoneNumber)
   .then((twilio_res) => res.json(twilio_res));
