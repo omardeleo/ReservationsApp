@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { parseTextMessage, validateReservation } = require('./helpers/reservations');
+const sendMessage = require('./helpers/twilio_messaging');
 
 const dummyText = {
   "ToCountry": "US",
@@ -71,10 +72,16 @@ router.get('/', (req, res, next) => {
   res.json(dummyJson);
 });
 
+const reservationSuccess = 'Great! You have reserved succesfully.';
+const reservationFailed = 'Sorry Something went wrong, check you message and try again.';
+
 router.post('/', (req, res, next) => {
   let reservation = parseTextMessage(req.body);
   let canReserve = validateReservation(reservation, dummyRestaurant);
-  res.json(reservation);
+  let message = canReserve ? reservationSuccess : reservationFailed;
+  // should probably have a catch for errors
+  sendMessage(message, reservation.phoneNumber)
+  .then((twilio_res) => res.json(twilio_res));
 });
 
 module.exports = router;
