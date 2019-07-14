@@ -51,7 +51,7 @@ function validateReservation(reservationObj, restaurantObj) {
   // first check date is valid
   if(!reservationDate) return false;
   // then check if time is in between
-  return openTime < reservationDate && closingTime > reservationDate
+  return openTime <= reservationDate && (closingTime - 3600000) >= (reservationDate);
 }
 
 module.exports = { parseTextMessage, validateReservation }
