@@ -7,8 +7,12 @@
     "start-client": "cd ./client; npm start",
     "start-server": "cd ./server; npm start",
     "start-dev": "npm-run-all -p start-server start-client",
+    "start": "node ./server/bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd ./client; npm install; cd ../server; npm install;"
+    "install": "cd ./client; npm install; cd ../server; npm install;",
+    "build-react": "cd client; npm run build;",
+    "postbuild-norm": "mkdir ./server/public; npm run build-react; mv -v ./client/build/* ./server/public",
+    "heroku-postbuild": "mkdir ./server/public; npm run build-react; mv -v ./client/build/* ./server/public; rm -rf ./client"
   },
   "repository": {
     "type": "git",
