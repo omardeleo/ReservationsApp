@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3001 nodemon ./bin/www"
+    "start": "PORT=3001 nodemon ./bin/www",
+    "test": "npx jest --watch"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
