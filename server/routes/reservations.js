@@ -86,10 +86,10 @@ router.post('/', (req, res, next) => {
     dummyJson.push(reservation);
   }
   else message = reservationFailed
-  res.json({"message": message});
+  // res.json({"message": message});
   // should probably have a catch for errors
-  // sendMessage(message, reservation.phoneNumber)
-  // .then((twilio_res) => res.json(twilio_res));
+  sendMessage(message, reservation.phoneNumber)
+  .then((twilio_res) => res.json(twilio_res));
 });
 
 module.exports = router;
