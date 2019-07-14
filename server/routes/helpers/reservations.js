@@ -12,7 +12,9 @@
 function parseTextMessage(message) {
   // i think the easiest simple way to parse it is to go use split to remote the parts we don't need
   // another way might be regex
-  let message_parse = message.Body.split("Reservation for ")[1].split(" at ");
+  // let message_parse = message.Body.split("Reservation for ")[1].split(" at ");
+  let message_parse = message.Body.split("Reservation for ").join("").split(" at ");
+  if(message_parse.length != 3) return null;
   let name = message_parse[0];
   let phoneNumber = message.From;
   // we need to figure out the time in 24 hour format for the time
@@ -41,6 +43,7 @@ function parseTextMessage(message) {
 // validates if can reserve for give reservationObj (given by parseTextMessage);
 // TODO: there is an issue if closing time is midnight then it should set the date to the next day, right now it will return false because it is set to todays date. might not be a big deal though
 function validateReservation(reservationObj, restaurantObj) {
+  if(!reservationObj || !restaurantObj) return false;
   let reservationDateObj = new Date(reservationObj.dateTime);
   let reservationDate = new Date().setHours(reservationDateObj.getHours(), reservationDateObj.getMinutes());
   // for open and close time we assume only given time and not date
@@ -50,8 +53,14 @@ function validateReservation(reservationObj, restaurantObj) {
   let closingTime = new Date().setHours(closingTimeHours[0], closingTimeHours[1]);
   // first check date is valid
   if(!reservationDate) return false;
-  // then check if time is in between
-  return openTime <= reservationDate && (closingTime - 3600000) >= (reservationDate);
+  // and finally check if time is in between
+  // then check
+  // - above or equal to open time
+  // - below one hour before closing
+  // - date is after now()
+  return (Date.parse(new Date()) < Date.parse(reservationObj.dateTime))
+    && openTime <= reservationDate
+    && (closingTime - 3600000) >= (reservationDate);
 }
 
 module.exports = { parseTextMessage, validateReservation }
