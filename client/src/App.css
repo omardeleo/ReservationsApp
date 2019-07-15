@@ -27,7 +27,15 @@ p {
   color: white;
 }
 
-.reservationlist li {
+.reservation-list.box {
+  margin-top: 10px;
+}
+
+.makeStyles-card-1 {
+  margin: auto auto 20px auto;
+}
+
+/* .reservationlist li {
   display: flex;
   justify-content: space-between;
   padding: 15px 0 17px;
@@ -57,7 +65,7 @@ ol li {
   margin:0;
   padding: 0;
   text-indent: 0;
-}
+} */
 
 .light-gray {
   color: rgba(255, 255, 255, 0.5);
