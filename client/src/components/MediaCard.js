@@ -33,7 +33,7 @@ function cardImage(date) {
   const split = date.split(" ")[3];
   const digits = split.split(":");
   const hours = parseInt(digits[0]);
-  console.log(hours);
+  
   if (hours > 17 && hours < 20) {
     return "/images/wendys_evening.jpg";
   } else if (hours > 20 || hours < 7) {
