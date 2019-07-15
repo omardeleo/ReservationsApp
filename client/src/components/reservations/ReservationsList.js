@@ -1,26 +1,18 @@
 import React from 'react';
 
-class ReservationsList extends React.Component {
-    state = {
-        reservations: []
-    }
-
-    componentDidMount() {
-        fetch('/reservations')
-            .then(res => res.json())
-            .then(reservations => this.setState({ reservations} ))
-    }
-
-    render() {
-        return (
-            <div className="App">
-                <h1>Reservations</h1>
-                {this.state.reservations.map(reservation => 
-                    <div key={reservation.id}>{reservation.name}</div>
-                )}
-            </div>
-        )
-    }
+export default class ReservationsList extends React.Component {
+  render() {
+    return(
+      <div className='reservationlist'>
+        <ol>
+          {this.props.reservations.map((res, i) => (
+            <li key={`reservation-${i}`}>
+              <span className='left'><span className='light-gray'>{i+1}.</span>  {res.name}</span>
+              <span className='right light-gray'>{res.dateTime}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  }
 }
-
-export default ReservationsList;
