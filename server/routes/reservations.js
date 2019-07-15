@@ -84,6 +84,7 @@ router.post('/', (req, res, next) => {
   if(canReserve) {
     message = reservationSuccess(reservation.name);
     dummyJson.push(reservation);
+    req.app.io.emit('reservations', reservation);
   }
   else message = reservationFailed
   // res.json({"message": message});
