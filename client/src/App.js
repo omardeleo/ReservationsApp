@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import './App.css';
+import io from 'socket.io-client';
+let socket = io('http://localhost:3001')
 
 import ReservationsList from './components/reservations/ReservationsList';
 
@@ -18,7 +20,17 @@ class App extends Component {
       .then(reservations =>
         this.setState({ reservations: reservations, numReservations: reservations.length }
         ));
+    let $this = this;
+    socket.on('reservations', function(data){
+      let reservations = [ ...$this.state.reservations ];
+      reservations.push(data);
+      $this.setState({
+        reservations: reservations,
+        numReservations: $this.state.numReservations+1,
+      });
+    })
   }
+
   render() {
     return (
       <div className="App">

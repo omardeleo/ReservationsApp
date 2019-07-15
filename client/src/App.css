@@ -23,7 +23,6 @@ p {
 .App-header {
   text-align: center;
   background-image: linear-gradient(to left, rgb(87, 27, 63), rgb(82, 14, 57));
-  height: 150px;
   padding: 20px;
   color: white;
 }

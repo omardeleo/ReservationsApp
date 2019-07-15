@@ -1,3 +1,5 @@
+const MONTHS = [ "January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December" ];
 // should return an object
 // {
 //   name,
@@ -30,7 +32,7 @@ function parseTextMessage(message) {
   let dateTime = new Date(`${message_parse[1]} ${time}:00`);
   let reservation = {
     name: name,
-    dateTime: dateTime.toString(),
+    dateTime: `${MONTHS[dateTime.getMonth()]} ${dateTime.getDate()}, ${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()  > 9 ? dateTime.getMinutes() : `0${dateTime.getMinutes()}`}`,
     duration: '1 hour',
     phoneNumber: phoneNumber,
     createdAt: new Date().toString(),
