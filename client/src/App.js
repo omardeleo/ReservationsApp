@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import './App.css';
 import io from 'socket.io-client';
-let socket = io('http://localhost:3001')
+let socket = io('/')
 
 import ReservationsList from './components/reservations/ReservationsList';
 
